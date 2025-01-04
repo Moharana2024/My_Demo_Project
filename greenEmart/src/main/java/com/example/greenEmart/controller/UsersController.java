@@ -22,6 +22,7 @@ public class UsersController {
 	
 	@PostMapping("/addUser")
 	public User addUser(@RequestBody User user) {
+		System.out.println("add method");
 		return userService.addUser(user);
 	}
 	
