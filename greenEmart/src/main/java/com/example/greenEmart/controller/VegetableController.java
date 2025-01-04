@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.greenEmart.model.GreenVeggies;
-import com.example.greenEmart.repository.VegetableRepository;
+import com.example.greenEmart.domain.GreenVeggies;
 import com.example.greenEmart.service.VegetableService;
 
 @RestController
@@ -33,8 +32,8 @@ public class VegetableController {
 	}
 	
 	@GetMapping("/getVegetableByName")
-	public GreenVeggies getVegetableByName(@RequestParam("id") String id) {
-		return vegService.getVegetableByName(id);
+	public List<GreenVeggies> getVegetableByName(@RequestParam("name") String name) {
+		return vegService.getVegetableByName(name);
 	}
 	
 	@PutMapping("/updateVegetable")

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.greenEmart.model.User;
+import com.example.greenEmart.domain.User;
 import com.example.greenEmart.service.UsersService;
 
 @RestController

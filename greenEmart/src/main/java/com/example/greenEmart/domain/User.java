@@ -1,4 +1,4 @@
-package com.example.greenEmart.model;
+package com.example.greenEmart.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,16 +8,16 @@ public class User {
 
 	@Id
 	private String id;
-	private String username;
+	private String name;
 	private String email;
 	private String password;
 	private String role; // e.g., ADMIN, CUSTOMER
 	private boolean active;
 	
-	public User(String id, String username, String email, String password, String role, boolean active) {
+	public User(String id, String name, String email, String password, String role, boolean active) {
 		super();
 		this.id = id;
-		this.username = username;
+		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.role = role;
@@ -33,13 +33,17 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return username;
+	
+
+	public String getName() {
+		return name;
 	}
 
-	public void setUserName(String username) {
-		this.username = username;
+
+	public void setName(String name) {
+		this.name = name;
 	}
+
 
 	public String getEmail() {
 		return email;

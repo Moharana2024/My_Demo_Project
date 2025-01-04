@@ -4,7 +4,7 @@ package com.example.greenEmart.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.greenEmart.model.User;
+import com.example.greenEmart.domain.User;
 import com.example.greenEmart.repository.UserRepository;
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ public class UsersService {
 	
 	
 	public User getUserByName(String name) {
-		return userRepo.findByUsername(name);
+		return userRepo.findByName(name);
 	}
 	
 	public User getUserByEmail(String email) {
@@ -32,7 +32,7 @@ public class UsersService {
 	 
 	 if(optionalUser.isPresent()) {
 		 User user1=optionalUser.get();
-		 user1.setUserName(user.getUserName());
+		 user1.setName(user.getName());
 		 user1.setEmail(user.getEmail());
 		 user1.setPassword(user.getPassword());
 		 user1.setRole(user.getRole());
@@ -47,9 +47,9 @@ public class UsersService {
 	}
 	
 	public String deleteUser(User user) {
-		User optionalUser =userRepo.findByUsername(user.getUserName());
+		User optionalUser =userRepo.findByName(user.getName());
 		userRepo.delete(optionalUser);
 		
-		return user.getUserName()+" deleted successfully";
+		return user.getName()+" deleted successfully";
 	}
 }

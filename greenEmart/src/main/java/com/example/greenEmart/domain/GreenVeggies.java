@@ -1,4 +1,4 @@
-package com.example.greenEmart.model;
+package com.example.greenEmart.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -67,8 +67,9 @@ public class GreenVeggies {
 	public void setAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
+	
 	public GreenVeggies(String id, String name, String category, boolean isSeasonal, double price, Integer quantity,
-			long totalPrice, boolean isAvailable) {
+			long totalPrice) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -77,7 +78,7 @@ public class GreenVeggies {
 		this.price = price;
 		this.quantity = quantity;
 		this.totalPrice = totalPrice;
-		this.isAvailable = isAvailable;
+		//this.isAvailable = isAvailable;
 	}
 
 		

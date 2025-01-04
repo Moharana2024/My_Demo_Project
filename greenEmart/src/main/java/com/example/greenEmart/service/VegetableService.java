@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.greenEmart.model.GreenVeggies;
+import com.example.greenEmart.domain.GreenVeggies;
 import com.example.greenEmart.repository.VegetableRepository;
 
 @Service
@@ -40,8 +40,8 @@ public class VegetableService {
 		return vegRepo.findAll();
 	}
 	
-	public GreenVeggies getVegetableByName(String id) {
-		return vegRepo.findById(id).get();
+	public List<GreenVeggies> getVegetableByName(String name) {
+		return vegRepo.findByName(name);
 	}
 	
 	public String updateVegetable(GreenVeggies vegetable){
@@ -63,6 +63,9 @@ public class VegetableService {
 		
 		return vegRepo.findByCategory(category);	
 	}
+	
+	
+	
 	
 	
 }
