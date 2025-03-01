@@ -1,5 +1,7 @@
 package com.example.greenEmart.domain;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,6 +17,7 @@ public class GreenVeggies {
 	private Integer quantity;
 	private long totalPrice;
 	private boolean isAvailable;
+	private Date createdAt;
 	
 	
 	public String getId() {
@@ -67,9 +70,16 @@ public class GreenVeggies {
 	public void setAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	
 	
 	public GreenVeggies(String id, String name, String category, boolean isSeasonal, double price, Integer quantity,
-			long totalPrice) {
+			long totalPrice,boolean isAvailable, Date createdAt ) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -78,7 +88,12 @@ public class GreenVeggies {
 		this.price = price;
 		this.quantity = quantity;
 		this.totalPrice = totalPrice;
-		//this.isAvailable = isAvailable;
+		this.isAvailable = isAvailable;
+		this.createdAt =createdAt;
+	}
+	
+	public GreenVeggies() {
+		super();
 	}
 
 		

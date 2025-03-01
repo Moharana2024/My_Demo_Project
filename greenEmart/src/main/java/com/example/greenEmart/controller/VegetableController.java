@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.greenEmart.domain.GreenVeggies;
+import com.example.greenEmart.dto.GreenVeggiesCreateDTO;
+import com.example.greenEmart.dto.GreenVeggiesResponseDTO;
 import com.example.greenEmart.service.VegetableService;
 
 @RestController
@@ -22,7 +24,7 @@ public class VegetableController {
 	public VegetableService vegService;
 	
 	@PostMapping("/addVeg")
-	public GreenVeggies addVegetable(@RequestBody GreenVeggies vegetable) {
+	public GreenVeggiesResponseDTO addVegetable(@RequestBody GreenVeggiesCreateDTO vegetable) {
 		return vegService.addVegetable(vegetable);
 	}
 	
@@ -42,7 +44,7 @@ public class VegetableController {
 	}
 	
 	@GetMapping("/getVeggiesByCategory")
-	public List<GreenVeggies> getVeggiesByCategory(@RequestParam("category") String category) {
+	public List<GreenVeggiesResponseDTO> getVeggiesByCategory(@RequestParam("category") String category) {
 		return vegService.getVeggiesByCategory(category);
 	}
 	
