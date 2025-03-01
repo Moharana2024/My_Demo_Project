@@ -50,5 +50,9 @@ public class UsersController {
 	public String deleteUser(@RequestParam("id") String id) {
 		return userService.deleteUser(id);
 	}
+	
+	public void testMethod() {
+		
+	}
 
 }
