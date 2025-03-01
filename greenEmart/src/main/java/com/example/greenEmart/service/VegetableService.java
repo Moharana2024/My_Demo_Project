@@ -90,7 +90,7 @@ public class VegetableService {
 	public List<GreenVeggies> getVegetableByName(String name) {
 		return vegRepo.findByName(name);
 	}
-	//update
+	//update vegetable
 	public String updateVegetable(GreenVeggies vegetable){
 		Optional<GreenVeggies> optionalVegetable=vegRepo.findById(vegetable.getId());
 		
