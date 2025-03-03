@@ -8,6 +8,9 @@ import com.example.greenEmart.domain.User;
 import com.example.greenEmart.dto.UserCreateDTO;
 import com.example.greenEmart.dto.UserResponseDTO;
 import com.example.greenEmart.repository.UserRepository;
+
+import exception.UserException;
+
 import java.util.Optional;
 
 @Service
@@ -17,62 +20,103 @@ public class UsersService {
 	public UserRepository userRepo;
     
 	
-	public UserResponseDTO addUser(UserCreateDTO userCreateDTO) {
+	public Object addUser(UserCreateDTO userCreateDTO) throws UserException{
 		
-		User user= new User();
+		// Check if user already exist by matching email. if present then raise an custom exception saying 
+		// user already exist.
 		
-		   user.setName(userCreateDTO.getName());
-		   user.setEmail(userCreateDTO.getEmail());
-		   user.setPassword(userCreateDTO.getPassword());
-		   user.setRole(userCreateDTO.getRole());
-		   user.setActive(true);
-		   
-		   User savedUserData = userRepo.save(user);
-		   
-		   UserResponseDTO userDTO = new UserResponseDTO();
-		   
-		   userDTO.setId(savedUserData.getId());
-		   userDTO.setName(savedUserData.getId());
-		   userDTO.setEmail(savedUserData.getEmail());
-		   userDTO.setPassword(savedUserData.getPassword());
-		   userDTO.setRole(savedUserData.getRole());
-		   userDTO.setActive(savedUserData.isActive());
-		   
-		return userDTO;
+			try {
+					User userDetails=userRepo.findByEmail(userCreateDTO.getEmail());
+					
+					if(userDetails!=null) {
+						
+						throw new UserException("user already exist");
+						
+					}else {
+						User user= new User();
+						
+						   user.setName(userCreateDTO.getName());
+						   user.setEmail(userCreateDTO.getEmail());
+						   user.setPassword(userCreateDTO.getPassword());
+						   user.setRole(userCreateDTO.getRole());
+						   user.setActive(true);
+						   
+						   User savedUserData = userRepo.save(user);
+						   
+						   UserResponseDTO userDTO = new UserResponseDTO();
+						   
+						   userDTO.setId(savedUserData.getId());
+						   userDTO.setName(savedUserData.getId());
+						   userDTO.setEmail(savedUserData.getEmail());
+						   userDTO.setPassword(savedUserData.getPassword());
+						   userDTO.setRole(savedUserData.getRole());
+						   		   
+						return userDTO;
+					}
+				   	}catch(UserException e) {
+				   		 return userCreateDTO.getEmail()+" is already exist";
+			}
 	}
 	
 	
-	public UserResponseDTO getUserByName(String name) {
+	public Object getUserByName(String name) throws UserException{
 		
-		   User userData = userRepo.findByName(name);
-		   
-		   UserResponseDTO userDTO = new UserResponseDTO();
-		   
-		   userDTO.setId(userData.getId());
-		   userDTO.setName(userData.getName());
-		   userDTO.setEmail(userData.getEmail());
-		   userDTO.setPassword(userData.getPassword());
-		   userDTO.setRole(userData.getRole());
-		   userDTO.setActive(userData.isActive());
-		   
-		return userDTO;
+		// As we are implementing soft delete, after fetching user details, check if user deleted or not. If deleted raise
+		// Custom exception saying user not available.
+		try {
+			   User userData = userRepo.findByName(name);
+			   
+			   if(userData.getActive()) {
+				   UserResponseDTO userDTO = new UserResponseDTO();
+				   
+				   userDTO.setId(userData.getId());
+				   userDTO.setName(userData.getName());
+				   userDTO.setEmail(userData.getEmail());
+				   userDTO.setPassword(userData.getPassword());
+				   userDTO.setRole(userData.getRole());
+				   
+				   
+				return userDTO;
+			   }
+			   else {
+				  
+				 throw new UserException("user is not exist");
+			   }
+			   
+			   
+		}catch(UserException e) {
+			return name+" user is not exist";
+		}	
+		
 	}
 	
-	public UserResponseDTO getUserByEmail(String email) {
+	public Object getUserByEmail(String email) throws UserException{
 		
-		User userData = userRepo.findByEmail(email);
+		// As we are implementing soft delete, after fetching user details, check if user deleted or not. If deleted raise
+		// Custom exception saying user not available.
+		try {
+			User userData = userRepo.findByEmail(email);
+			
+			if(userData.getActive()) {
+				UserResponseDTO userDTO = new UserResponseDTO();
+				   
+				   userDTO.setId(userData.getId());
+				   userDTO.setName(userData.getName());
+				   userDTO.setEmail(userData.getEmail());
+				   userDTO.setPassword(userData.getPassword());
+				   userDTO.setRole(userData.getRole());
+				   
 		
-		UserResponseDTO userDTO = new UserResponseDTO();
-		   
-		   userDTO.setId(userData.getId());
-		   userDTO.setName(userData.getName());
-		   userDTO.setEmail(userData.getEmail());
-		   userDTO.setPassword(userData.getPassword());
-		   userDTO.setRole(userData.getRole());
-		   userDTO.setActive(userData.isActive());
-
-		
-		return userDTO;
+				
+				return userDTO;
+			}
+			else {
+				throw new UserException("user is not exist");
+			}
+			
+		}catch(UserException e) {
+			return email+" user is not exist";
+		}
 	}
 	
 	public UserResponseDTO updateUser(UserCreateDTO user, String id) {
@@ -102,13 +146,30 @@ public class UsersService {
 	 } 
 	}
 	
-	public String deleteUser(String id) {
+	public String deleteUser(String id) throws UserException{
 		
-		Optional<User> optionalUser =userRepo.findById(id);
+		// Check for user existance then delete if not available then send proper message.
+		// Implement soft delete.
+		try {
+			User user =userRepo.findById(id).get();
+			
+			if(user != null && user.getActive()) {
+						
+				user.setActive(false);
+				userRepo.save(user);
+				return user.getName()+" deleted successfully";
+				
+				
+			 }else {
+				throw new UserException("This user is not available"+ user.getId());
+			}
+		} catch(UserException e) {
+			return id + " is not present";
+		}
 		
 		
-		userRepo.deleteById(optionalUser.get().getId());
+//		userRepo.deleteById(optionalUser.get().getId());
 		
-		return optionalUser.get().getName()+" deleted successfully";
+		
 	}
 }
