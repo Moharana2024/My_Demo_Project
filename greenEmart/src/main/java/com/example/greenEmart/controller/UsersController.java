@@ -29,7 +29,6 @@ public class UsersController {
 			return userService.addUser(user);
 	}
 	
-	
 	//get user by name
 	@GetMapping("/getUserByName")
 	public Object getUserByName(@RequestParam("name") String name) throws UserException{
@@ -48,13 +47,11 @@ public class UsersController {
 		return userService.updateUser(user, id);
 	}
 	
+	
+	//Delete User by Id...
 	@DeleteMapping("/deleteUser")
 	public String deleteUser(@RequestParam("id") String id) throws UserException {
 		return userService.deleteUser(id);
-	}
-	
-	public void testMethod() {
-		
 	}
 
 }
