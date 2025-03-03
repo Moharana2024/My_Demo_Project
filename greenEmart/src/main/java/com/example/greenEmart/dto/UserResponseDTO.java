@@ -7,7 +7,6 @@ public class UserResponseDTO {
 	private String email;
 	private String password;
 	private String role; // e.g., ADMIN, CUSTOMER
-	private boolean active;
 	
 	
 	public String getId() {
@@ -39,12 +38,6 @@ public class UserResponseDTO {
 	}
 	public void setRole(String role) {
 		this.role = role;
-	}
-	public boolean isActive() {
-		return active;
-	}
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 	
 	

@@ -15,6 +15,8 @@ import com.example.greenEmart.dto.UserCreateDTO;
 import com.example.greenEmart.dto.UserResponseDTO;
 import com.example.greenEmart.service.UsersService;
 
+import exception.UserException;
+
 @RestController
 @RequestMapping("/userController")
 public class UsersController {
@@ -23,20 +25,20 @@ public class UsersController {
 	public UsersService userService;
 	
 	@PostMapping("/addUser")
-	public UserResponseDTO addUser(@RequestBody UserCreateDTO user) {
+	public Object addUser(@RequestBody UserCreateDTO user) throws UserException{
 			return userService.addUser(user);
 	}
 	
 	
 	//get user by name
 	@GetMapping("/getUserByName")
-	public UserResponseDTO getUserByName(@RequestParam("name") String name) {
+	public Object getUserByName(@RequestParam("name") String name) throws UserException{
 		return userService.getUserByName(name);
 	}
 	
 	//get user by email
 	@GetMapping("/getUserByEmail")
-	public UserResponseDTO getUserByEmail(@RequestParam("email") String email) {
+	public Object getUserByEmail(@RequestParam("email") String email) throws UserException{
 		 //System.out.println("Fetching user by email: " + email);
 		return userService.getUserByEmail(email);
 	}
@@ -47,7 +49,7 @@ public class UsersController {
 	}
 	
 	@DeleteMapping("/deleteUser")
-	public String deleteUser(@RequestParam("id") String id) {
+	public String deleteUser(@RequestParam("id") String id) throws UserException {
 		return userService.deleteUser(id);
 	}
 	

@@ -11,8 +11,8 @@ public class User {
 	private String name;
 	private String email;
 	private String password;
-	private String role; // e.g., ADMIN, CUSTOMER
-	private boolean active;
+	private String role; // e.g., ADMIN, CUSTOMER  //how to distingush role....???
+	private Boolean active;
 	
 	
 	public User() {
@@ -20,7 +20,7 @@ public class User {
 	}
 	
 	
-	public User(String id, String name, String email, String password, String role, boolean active) {
+	public User(String id, String name, String email, String password, String role, Boolean active) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -75,13 +75,16 @@ public class User {
 		this.role = role;
 	}
 
-	public boolean isActive() {
+
+	public Boolean getActive() {
 		return active;
 	}
 
-	public void setActive(boolean active) {
+
+	public void setActive(Boolean active) {
 		this.active = active;
 	}
+	
 	
 	
 	
